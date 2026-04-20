@@ -22,7 +22,7 @@ This branch (`hostinger-frontend`) is a **Hostinger Node.js deploy branch**.
 Set in Hostinger:
 
 - `NEXT_PUBLIC_SITE_URL` = `https://jcarchitectureaiconsulting.com`
-- `NEXT_PUBLIC_API_BASE_URL` = `https://api.jcarchitectureaiconsulting.com/api`
+- `NEXT_PUBLIC_API_BASE_URL` = `https://jcarchitectureaiconsulting.com/api`
 
 # JC Architecture & AI Consulting Inc. (Website)
 
@@ -81,7 +81,7 @@ npm run dev
 ## Live domains
 
 - **Frontend**: `jcarchitectureaiconsulting.com`
-- **Backend API**: `api.jcarchitectureaiconsulting.com`
+- **Backend API**: `https://jcarchitectureaiconsulting.com/api` (Laravel in `public_html/api/`)
 
 Use:
 
@@ -93,16 +93,14 @@ Use:
 These notes assume:
 
 - `jcarchitectureaiconsulting.com` serves the **Next.js frontend**
-- `api.jcarchitectureaiconsulting.com` serves the **Laravel API**
+- **`/api/`** on the main domain serves the **Laravel API** (folder `public_html/api/`, not a separate `api.` host)
 - MySQL is available on the same server (or a managed DB)
 
 ### Backend (Laravel API) on Hostinger
 
 #### 1) Domain + web root
 
-- Point the subdomain `api.jcarchitectureaiconsulting.com` to your server.
-- Set the **document root** to:
-  - `.../claude-website/backend/public`
+- Deploy Laravel under **`public_html/api/`** on the main domain (see monorepo `README.md` on `main`).
 
 #### 2) Environment file
 
@@ -110,7 +108,7 @@ These notes assume:
 - Set at minimum:
   - `APP_ENV=production`
   - `APP_DEBUG=false`
-  - `APP_URL=https://api.jcarchitectureaiconsulting.com`
+  - `APP_URL=https://jcarchitectureaiconsulting.com/api`
   - `FRONTEND_URL=https://jcarchitectureaiconsulting.com`
   - `DB_*` credentials
 
@@ -172,7 +170,7 @@ Use this when Hostinger plan supports Node.js processes (typically VPS).
 1) Set env vars (example):
 
 - `NEXT_PUBLIC_SITE_URL=https://jcarchitectureaiconsulting.com`
-- `NEXT_PUBLIC_API_BASE_URL=https://api.jcarchitectureaiconsulting.com/api`
+- `NEXT_PUBLIC_API_BASE_URL=https://jcarchitectureaiconsulting.com/api`
 
 2) Build and run (from `frontend/`):
 
@@ -217,8 +215,5 @@ On the API server, ensure:
 
 ### SSL
 
-Enable SSL for both:
-
-- `jcarchitectureaiconsulting.com`
-- `api.jcarchitectureaiconsulting.com`
+Enable SSL for `jcarchitectureaiconsulting.com` (covers the site and `/api` on the same certificate).
 
