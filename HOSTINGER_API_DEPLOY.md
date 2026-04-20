@@ -25,6 +25,32 @@ public_html/api/                 ← web root for the API (only “public” fil
 
 ---
 
+## Clone straight into `public_html/api` (no `~/repositories` copy step)
+
+Git **sparse clone** checks out only the `backend/` tree into the `api` folder, then copies `backend/public/` next to it and installs the Hostinger `index.php`.
+
+**One command** (replace the path with your real `public_html/api` absolute path):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/kass2024/claude_web/main/backend/scripts/git-clone-into-public-html-api.sh | bash -s /home/YOURUSER/domains/jcarchitectureaiconsulting.com/public_html/api
+```
+
+**Warning:** this **deletes and recreates** the `api` directory (`rm -rf api`). Do not run if you already have data there you need to keep.
+
+After it finishes:
+
+```bash
+cd /home/YOURUSER/domains/jcarchitectureaiconsulting.com/public_html/api/backend
+composer install --no-dev --optimize-autoloader
+cp .env.production.example .env && nano .env
+php artisan key:generate --force && php artisan migrate --force && php artisan db:seed --force
+php artisan storage:link && php artisan config:cache && php artisan route:cache
+```
+
+If you cannot use `curl` from GitHub on the server, run the same script from a clone on your PC and upload it, or use the file in this repo: `backend/scripts/git-clone-into-public-html-api.sh`.
+
+---
+
 ## Step 1 — Push from your PC (GitHub must have latest)
 
 ```powershell
