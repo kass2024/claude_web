@@ -1,4 +1,4 @@
-# JC Architecture & AI Consulting Inc. (Website)
+# JC Architecture & AI Consulting Inc. (Monorepo)
 
 Monorepo containing:
 
@@ -195,4 +195,12 @@ Enable SSL for both:
 
 - `jcarchitectureaiconsulting.com`
 - `api.jcarchitectureaiconsulting.com`
+
+## Hostinger branches (important)
+
+Hostinger sometimes auto-detects the wrong folder when importing a monorepo.
+
+- **Deploy the frontend website** from branch `hostinger-frontend`
+- **Deploy the backend API** from branch `hostinger-backend`
+- Full source stays on `main`
 
