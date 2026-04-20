@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Models;
+
+use Database\Factories\ProjectFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Project extends Model
+{
+    /** @use HasFactory<ProjectFactory> */
+    use HasFactory;
+
+    /**
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'title',
+        'slug',
+        'category',
+        'client_name',
+        'country',
+        'short_description',
+        'full_description',
+        'cover_image_path',
+        'gallery_paths',
+        'completion_date',
+        'is_published',
+    ];
+
+    /**
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'gallery_paths' => 'array',
+        'completion_date' => 'date',
+        'is_published' => 'boolean',
+    ];
+}
+

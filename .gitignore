@@ -1,0 +1,25 @@
+.DS_Store
+Thumbs.db
+
+# env / secrets
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.production.example
+!frontend/.env.local.example
+
+# dependencies & builds
+**/node_modules/
+frontend/.next/
+frontend/out/
+
+backend/vendor/
+backend/storage/*.key
+backend/storage/logs/
+backend/storage/framework/cache/
+backend/storage/framework/sessions/
+backend/storage/framework/views/
+
+# misc
+backend/database/database.sqlite
+
