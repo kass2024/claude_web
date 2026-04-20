@@ -54,8 +54,8 @@ npm run dev
 
 ## Live domains
 
-- **Frontend**: `jcarchitectureaiconsulting.com`
-- **Backend API**: `api.jcarchitectureaiconsulting.com`
+- **Frontend**: `jcarchitectureaiconsulting.com` (static HTML at the domain root)
+- **Backend API**: same host, folder URL `jcarchitectureaiconsulting.com/api` (Laravel under `public_html/api/`)
 
 Use:
 
@@ -66,17 +66,16 @@ Use:
 
 These notes assume:
 
-- `jcarchitectureaiconsulting.com` serves the **Next.js frontend**
-- `api.jcarchitectureaiconsulting.com` serves the **Laravel API**
+- `jcarchitectureaiconsulting.com` serves the **static or Node frontend** at the domain root (`public_html/`)
+- The **Laravel API** lives in a normal subfolder on the same domain: `public_html/api/` (public URL `https://jcarchitectureaiconsulting.com/api`)
 - MySQL is available on the same server (or a managed DB)
 
 ### Backend (Laravel API) on Hostinger
 
-#### 1) Domain + web root
+#### 1) Folder layout (no `api.` subdomain)
 
-- Point the subdomain `api.jcarchitectureaiconsulting.com` to your server.
-- Set the **document root** to:
-  - `.../claude-website/backend/public`
+- Deploy Laravel so the **web entry** for the API is **`public_html/api/`** (e.g. `index.php` + `.htaccess` from `backend/public`, with `artisan` and `app` living in `public_html/api/backend/` or your chosen layout).
+- The browser must reach JSON at **`https://jcarchitectureaiconsulting.com/api/...`** (Laravel’s `routes/api.php` prefix is `/api`, so list routes are like `/api/services`).
 
 #### 2) Environment file
 
@@ -84,9 +83,10 @@ These notes assume:
 - Set at minimum:
   - `APP_ENV=production`
   - `APP_DEBUG=false`
-  - `APP_URL=https://api.jcarchitectureaiconsulting.com`
+  - `APP_URL=https://jcarchitectureaiconsulting.com/api` (must match the **public** URL of the Laravel app, including the `/api` path)
   - `FRONTEND_URL=https://jcarchitectureaiconsulting.com`
   - `DB_*` credentials
+  - Optional: `FRONTEND_URLS=http://localhost:3000` if you run **Next.js on localhost** but call the **production** API during development (CORS).
 
 #### 3) Install + optimize (from `backend/`)
 
@@ -146,7 +146,7 @@ Use this when Hostinger plan supports Node.js processes (typically VPS).
 1) Set env vars (example):
 
 - `NEXT_PUBLIC_SITE_URL=https://jcarchitectureaiconsulting.com`
-- `NEXT_PUBLIC_API_BASE_URL=https://api.jcarchitectureaiconsulting.com/api`
+- `NEXT_PUBLIC_API_BASE_URL=https://jcarchitectureaiconsulting.com/api`
 
 2) Build and run (from `frontend/`):
 
@@ -187,12 +187,12 @@ npm run build
 
 On the API server, ensure:
 
-- `FRONTEND_URL=https://jcarchitectureaiconsulting.com` in `backend/.env`
+- `FRONTEND_URL=https://jcarchitectureaiconsulting.com` in `backend/.env` (primary browser origin for the public site)
+- If you develop with **Next on `http://localhost:3000`** but hit the **live** API, set `FRONTEND_URLS=http://localhost:3000` (comma-separated list is supported in `config/cors.php`)
 
 ### SSL
 
-Enable SSL for both:
+Enable SSL for:
 
-- `jcarchitectureaiconsulting.com`
-- `api.jcarchitectureaiconsulting.com`
+- `jcarchitectureaiconsulting.com` (covers both the static site and `/api` on the same certificate)
 

@@ -5,9 +5,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => array_values(array_filter([
-        env('FRONTEND_URL'),
-    ])),
+    'allowed_origins' => array_values(array_filter(array_merge(
+        [env('FRONTEND_URL')],
+        array_map('trim', explode(',', (string) env('FRONTEND_URLS', '')))
+    ))),
 
     'allowed_origins_patterns' => [],
 

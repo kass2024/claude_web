@@ -2,7 +2,7 @@
 
 This project’s **Next.js** app is configured for **`output: "export"`**. Running **`npm run build`** produces a static site in **`frontend/out/`** (HTML, JS, CSS, `_next/`, etc.). You upload **the contents of `out/`** to your main domain’s **`public_html`** on shared hosting—**no Node.js** runtime is required on the server for the marketing site.
 
-Your **Laravel API** can stay on **`api.`** or under **`public_html/api/`** as you already set up; this guide only replaces the **public marketing files**.
+**Recommended layout on shared hosting:** static marketing files in **`public_html/`** (root), Laravel API in a normal folder **`public_html/api/`** (same domain, no `api.` subdomain). Example: `https://jcarchitectureaiconsulting.com/` for the site and `https://jcarchitectureaiconsulting.com/api/...` for JSON. This guide only replaces the **root** marketing files; **do not remove `api/`** unless you are redeploying the API elsewhere.
 
 ---
 
@@ -12,8 +12,8 @@ Your **Laravel API** can stay on **`api.`** or under **`public_html/api/`** as y
 
 - **Node.js** 20 or 22 (LTS recommended) and **npm** installed.
 - Your **API must be reachable over HTTPS** during the build (the site prerenders pages and reads `/services`, `/projects`, `/posts`, etc.).  
-  - Production: `https://api.jcarchitectureaiconsulting.com/api`  
-  - Or any URL that returns the same JSON your live site uses.
+  - Production (API in a folder on the main domain): `https://jcarchitectureaiconsulting.com/api`  
+  - Or any base URL that returns the same JSON your live site uses (no trailing slash after `api`).
 
 ### A2. Open a terminal in the frontend folder
 
@@ -35,7 +35,7 @@ Replace with your real domain and API if they differ:
 
 ```powershell
 $env:NEXT_PUBLIC_SITE_URL = "https://jcarchitectureaiconsulting.com"
-$env:NEXT_PUBLIC_API_BASE_URL = "https://api.jcarchitectureaiconsulting.com/api"
+$env:NEXT_PUBLIC_API_BASE_URL = "https://jcarchitectureaiconsulting.com/api"
 ```
 
 Optional: create **`frontend/.env.production.local`** with the same two variables so you do not have to type them each time (Next loads it automatically for `next build`).
@@ -120,7 +120,7 @@ Static HTML is fixed at build time. After you add services, projects, or posts i
 ## One-liner reference (build only)
 
 ```powershell
-cd c:\methode\water_level\claude-website\frontend; npm ci; $env:NEXT_PUBLIC_SITE_URL="https://jcarchitectureaiconsulting.com"; $env:NEXT_PUBLIC_API_BASE_URL="https://api.jcarchitectureaiconsulting.com/api"; npm run build
+cd c:\methode\water_level\claude-website\frontend; npm ci; $env:NEXT_PUBLIC_SITE_URL="https://jcarchitectureaiconsulting.com"; $env:NEXT_PUBLIC_API_BASE_URL="https://jcarchitectureaiconsulting.com/api"; npm run build
 ```
 
 Output directory: **`frontend\out\`**.
