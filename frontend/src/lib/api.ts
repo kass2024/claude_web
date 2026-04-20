@@ -3,8 +3,16 @@ export const API_BASE_URL =
 
 async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const url = `${API_BASE_URL}${path.startsWith("/") ? "" : "/"}${path}`;
+  const timeoutMs = 12_000;
+  const timeoutSignal = AbortSignal.timeout(timeoutMs);
+  const signal =
+    init?.signal != null
+      ? AbortSignal.any([timeoutSignal, init.signal])
+      : timeoutSignal;
+
   const res = await fetch(url, {
     ...init,
+    signal,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
