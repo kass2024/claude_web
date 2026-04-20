@@ -1,3 +1,29 @@
+# JC Architecture & AI Consulting Inc. (Frontend)
+
+This branch (`hostinger-frontend`) is a **Hostinger Node.js deploy branch**.
+
+- The **Next.js app is at the repository root** so Hostinger can detect it without changing “root directory”.
+- The full monorepo (frontend + Laravel API) remains on the `main` branch.
+
+## Hostinger (Node.js) deploy settings
+
+- **Repository**: `kass2024/claude_web`
+- **Branch**: `hostinger-frontend`
+- **Node version**: 22.x (works with this project)
+
+### Build / start
+
+- **Install**: `npm ci`
+- **Build**: `npm run build`
+- **Start**: `npm run start -- -p $PORT`
+
+### Environment variables
+
+Set in Hostinger:
+
+- `NEXT_PUBLIC_SITE_URL` = `https://jcarchitectureaiconsulting.com`
+- `NEXT_PUBLIC_API_BASE_URL` = `https://api.jcarchitectureaiconsulting.com/api`
+
 # JC Architecture & AI Consulting Inc. (Website)
 
 Monorepo containing:
